@@ -11,6 +11,7 @@
         body {
             font-family: 'Noto Sans TC', sans-serif;
             background-color: #f0f2f5;
+            scroll-behavior: smooth;
         }
         .hero-gradient {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
@@ -25,6 +26,14 @@
         .step-number {
             background: rgba(59, 130, 246, 0.1);
             color: #2563eb;
+        }
+        .line-button {
+            background-color: #06C755;
+            transition: all 0.3s ease;
+        }
+        .line-button:hover {
+            background-color: #05a647;
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -41,15 +50,15 @@
                 <div class="hidden md:flex space-x-8">
                     <a href="#districts" class="text-gray-600 hover:text-blue-600 font-medium transition">選擇小區</a>
                     <a href="#guide" class="text-gray-600 hover:text-blue-600 font-medium transition">操作指引</a>
-                    <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition">聯絡窗口</a>
+                    <a href="#contact" class="text-gray-600 hover:text-blue-600 font-medium transition">聯絡窗口</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- 英雄視覺區 -->
-    <header class="hero-gradient py-20 text-white">
-        <div class="max-w-5xl mx-auto px-4 text-center">
+    <header class="hero-gradient py-20 text-white text-center">
+        <div class="max-w-5xl mx-auto px-4">
             <h1 class="text-4xl md:text-5xl font-extrabold mb-6">傳承信仰，記錄恩典</h1>
             <p class="text-xl md:text-2xl text-blue-100 mb-10 max-w-3xl mx-auto leading-relaxed">
                 西區四大小區、十三個牧區、四十四間教會。<br>
@@ -71,76 +80,57 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <!-- 復興小區 -->
-            <a href="fuxing.html" class="district-card bg-white rounded-3xl p-8 text-center border border-gray-100 block">
+            <a href="fuxing.html" class="district-card bg-white rounded-3xl p-8 text-center border border-gray-100 block group">
                 <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
                     <i class="fas fa-mountain text-3xl"></i>
                 </div>
                 <h3 class="text-2xl font-bold mb-3 text-gray-800">復興小區</h3>
                 <p class="text-gray-500 mb-6">前山、中山、後山</p>
-                <span class="inline-flex items-center text-emerald-600 font-bold group">
-                    進入專區 <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
-                </span>
+                <span class="inline-flex items-center text-emerald-600 font-bold">進入專區 <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i></span>
             </a>
-
-            <!-- 竹苗小區 -->
-            <a href="hsinchu-miaoli.html" class="district-card bg-white rounded-3xl p-8 text-center border border-gray-100 block">
+            <a href="hsinchu-miaoli.html" class="district-card bg-white rounded-3xl p-8 text-center border border-gray-100 block group">
                 <div class="w-20 h-20 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
                     <i class="fas fa-tree text-3xl"></i>
                 </div>
                 <h3 class="text-2xl font-bold mb-3 text-gray-800">竹苗小區</h3>
                 <p class="text-gray-500 mb-6">五峰、尖石、中港溪</p>
-                <span class="inline-flex items-center text-blue-600 font-bold group">
-                    進入專區 <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
-                </span>
+                <span class="inline-flex items-center text-blue-600 font-bold">進入專區 <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i></span>
             </a>
-
-            <!-- 中苗小區 -->
-            <a href="taichung-miaoli.html" class="district-card bg-white rounded-3xl p-8 text-center border border-gray-100 block">
+            <a href="taichung-miaoli.html" class="district-card bg-white rounded-3xl p-8 text-center border border-gray-100 block group">
                 <div class="w-20 h-20 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
                     <i class="fas fa-water text-3xl"></i>
                 </div>
                 <h3 class="text-2xl font-bold mb-3 text-gray-800">中苗小區</h3>
                 <p class="text-gray-500 mb-6">東達、大甲溪、泰安</p>
-                <span class="inline-flex items-center text-amber-600 font-bold group">
-                    進入專區 <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
-                </span>
+                <span class="inline-flex items-center text-amber-600 font-bold">進入專區 <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i></span>
             </a>
-
-            <!-- 南投小區 -->
-            <a href="nantou.html" class="district-card bg-white rounded-3xl p-8 text-center border border-gray-100 block">
+            <a href="nantou.html" class="district-card bg-white rounded-3xl p-8 text-center border border-gray-100 block group">
                 <div class="w-20 h-20 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
                     <i class="fas fa-cloud-sun text-3xl"></i>
                 </div>
                 <h3 class="text-2xl font-bold mb-3 text-gray-800">南投小區</h3>
                 <p class="text-gray-500 mb-6">力行、親春、新望愛</p>
-                <span class="inline-flex items-center text-purple-600 font-bold group">
-                    進入專區 <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
-                </span>
+                <span class="inline-flex items-center text-purple-600 font-bold">進入專區 <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i></span>
             </a>
         </div>
     </main>
 
     <!-- 操作指引 -->
     <section id="guide" class="bg-gray-50 py-16">
-        <div class="max-w-5xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900">上傳三步驟</h2>
-                <p class="text-gray-500 mt-2">簡單快速地完成數位典藏貢獻</p>
-            </div>
-            
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-12">上傳三步驟</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="flex flex-col items-center text-center">
+                <div class="flex flex-col items-center">
                     <div class="w-12 h-12 step-number rounded-full flex items-center justify-center text-2xl font-bold mb-4">1</div>
                     <h4 class="text-xl font-bold mb-2">選擇所屬教會</h4>
                     <p class="text-gray-600">從小區入口進入，找到您的牧區與教會卡片。</p>
                 </div>
-                <div class="flex flex-col items-center text-center">
+                <div class="flex flex-col items-center">
                     <div class="w-12 h-12 step-number rounded-full flex items-center justify-center text-2xl font-bold mb-4">2</div>
                     <h4 class="text-xl font-bold mb-2">準備檔案</h4>
                     <p class="text-gray-600">包含宣道史 PDF、歷史照片 JPG 與口述影片 MP4。</p>
                 </div>
-                <div class="flex flex-col items-center text-center">
+                <div class="flex flex-col items-center">
                     <div class="w-12 h-12 step-number rounded-full flex items-center justify-center text-2xl font-bold mb-4">3</div>
                     <h4 class="text-xl font-bold mb-2">點擊上傳</h4>
                     <p class="text-gray-600">點選上傳按鈕跳轉至 Google 表單完成資料遞交。</p>
@@ -149,14 +139,35 @@
         </div>
     </section>
 
-    <!-- 頁尾 -->
-    <footer class="bg-white border-t py-12">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <div class="flex justify-center space-x-4 mb-6">
-                <i class="fas fa-cross text-gray-400 text-xl"></i>
+    <!-- 聯絡窗口區塊 -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-blue-50 rounded-3xl p-8 md:p-12 text-center border-2 border-blue-100 shadow-xl">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-600 text-white rounded-full mb-6">
+                    <i class="fas fa-headset text-2xl"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">遇到操作困難嗎？</h2>
+                <p class="text-lg text-gray-600 mb-10">
+                    如果您在資料上傳、檔案格式或是網頁操作上有任何疑問，<br class="hidden md:block">
+                    歡迎透過 LINE 與專案小組直接聯繫。
+                </p>
+                
+                <div class="flex flex-col items-center space-y-4">
+                    <!-- LINE 按鈕：請更換您的 LINE 連結 -->
+                    <a href="https://line.me/ti/p/U3XGjc8GKN" target="_blank" class="line-button text-white px-10 py-4 rounded-2xl font-bold text-xl flex items-center shadow-lg">
+                        <i class="fab fa-line text-3xl mr-3"></i> 點我加入專案窗口 LINE
+                    </a>
+                    <p class="text-sm text-gray-400">真耶穌教會 傳教百年115西區音樂會籌備會 公關宣傳組</p>
+                </div>
             </div>
-            <p class="text-gray-500 mb-2">真耶穌教會傳教百年 115西區音樂會籌備會公關宣傳小組 敬製</p>
-            <p class="text-sm text-gray-400">&copy; 2026 TJC West District History Project. All rights reserved.</p>
+        </div>
+    </section>
+
+    <!-- 頁尾 -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400 mb-2 font-medium">真耶穌教會 西區辦事處 宣道歷史研究小組 敬製</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">&copy; 2026 TJC West District History Project</p>
         </div>
     </footer>
 
