@@ -70,13 +70,13 @@
         /**
          * ⚙️ 核心設定區 (請務必修改此處)
          */
-        // 1. 您的 Google 表單 ID (在表單網址 /d/e/ 與 /viewform 之間的那串字)
+        // 1. 您的 Google 表單 ID
         const FORM_ID = '1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q'; 
 
-        // 2. 您的「教會名稱」欄位代號 (通常是 entry.加上一串數字，如 entry.1234567)
+        // 2. 您的「教會名稱」欄位代號
         const ENTRY_ID = 'entry.974815491'; 
 
-        // 3. 您的 API URL (已填入您提供的連結)
+        // 3. 您的 API URL
         const API_URL = 'https://script.google.com/macros/s/AKfycbzb4Hp2YBHCK2VcWkVmr8enooLLksNcJOnd98frV-O-jr_quonp3huNhTectJDIxZUEAQ/exec';
 
         // 復興小區教會清單
@@ -93,7 +93,8 @@
                 const container = document.getElementById(`${key}-list`);
                 
                 zone.churches.forEach(name => {
-                    const uploadUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform?${ENTRY_ID}=${encodeURIComponent(name)}`;
+                    // 加入 continue_cb=1 參數以避免顯示「繼續使用草稿」的提示
+                    const uploadUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform?${ENTRY_ID}=${encodeURIComponent(name)}&continue_cb=1`;
                     
                     const card = document.createElement('div');
                     card.className = "bg-white p-6 rounded-3xl border border-gray-100 church-card shadow-sm";
