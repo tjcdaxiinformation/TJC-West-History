@@ -30,7 +30,7 @@
         </div>
 
         <header class="text-center mb-16">
-            <h1 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">🕊️ 宣道歷史收集：復興小區</h1>
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight tracking-tight">🕊️ 宣道歷史收集：復興小區</h1>
             <p class="text-gray-600 text-lg max-w-2xl mx-auto italic">
                 「傳承信仰，記錄恩典」— 整合前山、中山與後山牧區之數位典藏入口
             </p>
@@ -38,7 +38,7 @@
 
         <!-- 1. 前山牧區 -->
         <section class="mb-16">
-            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title">📍 前山牧區</h3>
+            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title text-gray-800">📍 前山牧區</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="qianshan-list">
                 <!-- 由 JS 自動產生卡片 -->
             </div>
@@ -46,7 +46,7 @@
 
         <!-- 2. 中山牧區 -->
         <section class="mb-16">
-            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title" style="border-left-color: #3b82f6;">📍 中山牧區</h3>
+            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title text-gray-800" style="border-left-color: #3b82f6;">📍 中山牧區</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="zhongshan-list">
                 <!-- 由 JS 自動產生卡片 -->
             </div>
@@ -54,7 +54,7 @@
 
         <!-- 3. 後山牧區 -->
         <section class="mb-16">
-            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title" style="border-left-color: #f59e0b;">📍 後山牧區</h3>
+            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title text-gray-800" style="border-left-color: #f59e0b;">📍 後山牧區</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="houshan-list">
                 <!-- 由 JS 自動產生卡片 -->
             </div>
@@ -68,12 +68,12 @@
 
     <script>
         /**
-         * ⚙️ 核心設定區 (請務必修改此處)
+         * ⚙️ 核心設定區
          */
         // 1. 您的 Google 表單 ID
         const FORM_ID = '1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q'; 
 
-        // 2. 您的「教會名稱」欄位代號
+        // 2. 您的「教會名稱」欄位代號 (已更新為正確的數字 ID)
         const ENTRY_ID = 'entry.974815491'; 
 
         // 3. 您的 API URL
@@ -86,15 +86,13 @@
             houshan: { color: 'amber', churches: ['上巴陵', '中巴陵', '三光', '光華'] }
         };
 
-        // 自動產生卡片的函數
         function initChurches() {
             Object.keys(districts).forEach(key => {
                 const zone = districts[key];
                 const container = document.getElementById(`${key}-list`);
                 
                 zone.churches.forEach(name => {
-                    // 加入 continue_cb=1 參數以避免顯示「繼續使用草稿」的提示
-                    const uploadUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform?${ENTRY_ID}=${encodeURIComponent(name)}&continue_cb=1`;
+                    const uploadUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform?usp=pp_url&${ENTRY_ID}=${encodeURIComponent(name)}`;
                     
                     const card = document.createElement('div');
                     card.className = "bg-white p-6 rounded-3xl border border-gray-100 church-card shadow-sm";
@@ -109,11 +107,11 @@
             });
         }
 
-        // 同步狀態的函數
         async function fetchStatus() {
             const statusLabel = document.getElementById('update-status');
             try {
                 const response = await fetch(API_URL);
+                if (!response.ok) throw new Error('API 無法存取');
                 const data = await response.json();
                 const submittedList = data.submitted || [];
 
@@ -130,6 +128,7 @@
                 });
                 statusLabel.innerHTML = `<i class="fas fa-sync-alt text-green-500 mr-2"></i>同步成功`;
             } catch (e) {
+                console.error(e);
                 statusLabel.innerHTML = `<i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>狀態同步失敗`;
             }
         }
