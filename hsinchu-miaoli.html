@@ -22,7 +22,7 @@
         <!-- 頂部導覽 -->
         <div class="mb-8 flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
             <a href="index.html" class="flex items-center text-blue-600 hover:text-blue-800 font-medium transition text-lg">
-                <i class="fas fa-home mr-2 text-blue-600"></i>回到首頁
+                <i class="fas fa-home mr-2"></i>回到首頁
             </a>
             <span id="update-status" class="text-sm font-medium text-gray-500 bg-gray-50 px-4 py-1 rounded-full">
                 <span class="loader mr-2"></span>正在同步雲端狀態...
@@ -30,29 +30,33 @@
         </div>
 
         <header class="text-center mb-16">
-            <h1 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight tracking-tight">🕊️ 宣道歷史收集：竹苗小區</h1>
-            <p class="text-gray-600 text-lg max-w-2xl mx-auto italic text-gray-600">
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">🕊️ 宣道歷史收集：竹苗小區</h1>
+            <p class="text-gray-600 text-lg max-w-2xl mx-auto italic">
                 「傳承信仰，記錄恩典」— 整合五峰、尖石與中港溪牧區之數位典藏入口
             </p>
         </header>
 
+        <!-- 1. 五峰牧區 -->
         <section class="mb-16">
-            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title text-gray-800">📍 五峰牧區</h3>
+            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title">📍 五峰牧區</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="wufeng-list"></div>
         </section>
 
+        <!-- 2. 尖石前牧區 -->
         <section class="mb-16">
-            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title text-gray-800" style="border-left-color: #10b981;">📍 尖石前牧區</h3>
+            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title" style="border-left-color: #10b981;">📍 尖石前牧區</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="jianshiqian-list"></div>
         </section>
 
+        <!-- 3. 中港溪牧區 -->
         <section class="mb-16">
-            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title text-gray-800" style="border-left-color: #f59e0b;">📍 中港溪牧區</h3>
+            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title" style="border-left-color: #f59e0b;">📍 中港溪牧區</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="zhonggangxi-list"></div>
         </section>
 
+        <!-- 4. 尖石後牧區 -->
         <section class="mb-16">
-            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title text-gray-800" style="border-left-color: #ef4444;">📍 尖石後牧區</h3>
+            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title" style="border-left-color: #ef4444;">📍 尖石後牧區</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="jianshihou-list"></div>
         </section>
 
@@ -79,7 +83,7 @@
                 const zone = districts[key];
                 const container = document.getElementById(`${key}-list`);
                 zone.churches.forEach(name => {
-                    const uploadUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform?usp=pp_url&${ENTRY_ID}=${encodeURIComponent(name)}`;
+                    const uploadUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform?usp=pp_url&${ENTRY_ID}=${encodeURIComponent(name)}&continue_draft=false`;
                     const card = document.createElement('div');
                     card.className = "bg-white p-6 rounded-3xl border border-gray-100 church-card shadow-sm";
                     card.setAttribute('data-church', name);
@@ -102,14 +106,14 @@
                 document.querySelectorAll('[data-status-for]').forEach(badge => {
                     const name = badge.getAttribute('data-status-for');
                     if (submittedList.includes(name)) {
-                        badge.innerHTML = '<i class="fas fa-check-circle mr-1 text-green-600"></i>已收件';
+                        badge.innerHTML = '<i class="fas fa-check-circle mr-1"></i>已收件';
                         badge.classList.remove('text-orange-500');
                         badge.classList.add('text-green-600', 'font-bold');
                         badge.closest('.church-card').classList.add('border-green-200', 'bg-green-50/20');
                     } else { badge.innerHTML = '⏳ 待繳交'; }
                 });
-                statusLabel.innerHTML = `<i class="fas fa-sync-alt text-green-500 mr-2 text-green-500"></i>同步成功`;
-            } catch (e) { statusLabel.innerHTML = `<i class="fas fa-exclamation-triangle text-red-500 mr-2 text-red-500"></i>同步失敗`; }
+                statusLabel.innerHTML = `<i class="fas fa-sync-alt text-green-500 mr-2"></i>同步成功`;
+            } catch (e) { statusLabel.innerHTML = `<i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>狀態同步失敗`; }
         }
 
         window.onload = () => { initChurches(); fetchStatus(); };
