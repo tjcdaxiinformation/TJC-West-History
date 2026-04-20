@@ -8,105 +8,102 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
-        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f5f3ff; }
-        .pastoral-header { border-left: 5px solid #7c3aed; }
-        .church-card:hover { transform: translateY(-4px); }
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f5f3ff; scroll-behavior: smooth; }
+        .church-card { transition: all 0.3s ease; }
+        .church-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .loader { border: 2px solid #f3f3f3; border-top: 2px solid #3498db; border-radius: 50%; width: 14px; height: 14px; animation: spin 1s linear infinite; display: inline-block; vertical-align: middle; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .section-title { border-left: 5px solid #7c3aed; padding-left: 1rem; }
     </style>
 </head>
 <body class="py-10 px-4">
 
-    <div class="max-w-5xl mx-auto">
-        <div class="mb-8">
-            <a href="index.html" class="text-purple-700 hover:text-purple-900 font-medium transition">
-                <i class="fas fa-arrow-left mr-2"></i>回到首頁
+    <div class="max-w-6xl mx-auto">
+        <div class="mb-8 flex justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+            <a href="index.html" class="flex items-center text-purple-600 hover:text-purple-800 font-medium transition text-lg">
+                <i class="fas fa-home mr-2"></i>回到首頁
             </a>
+            <span id="update-status" class="text-sm font-medium text-gray-500 bg-gray-50 px-4 py-1 rounded-full">
+                <span class="loader mr-2"></span>正在同步雲端狀態...
+            </span>
         </div>
 
-        <header class="text-center mb-12">
-            <h1 class="text-4xl font-extrabold text-gray-900 mb-4">🕊️ 宣道歷史收集：南投小區</h1>
-            <p class="text-gray-600 text-lg italic">"Malu' su' (賽德克/泰雅語：你好)" — 深山高海拔教會的生命見證</p>
+        <header class="text-center mb-16">
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">🕊️ 宣道歷史收集：南投小區</h1>
+            <p class="text-gray-600 text-lg max-w-2xl mx-auto italic">「傳承信仰，記錄恩典」— 力行線、親春線與新望愛牧區</p>
         </header>
 
-        <div class="bg-purple-50 border border-purple-200 rounded-2xl p-6 mb-10 text-center">
-            <p class="text-purple-800 font-medium">南投小區涵蓋多個高海拔部落，請特別協助長輩完成口述錄影，保存寶貴的信仰傳承。</p>
-        </div>
-
-        <!-- 力行線牧區 -->
-        <section class="mb-12">
-            <div class="pastoral-header bg-white shadow-sm p-4 rounded-r-lg mb-6">
-                <h3 class="text-2xl font-bold text-gray-800 text-purple-900">📍 力行線牧區</h3>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-purple-100 church-card transition duration-300 text-center">
-                    <h5 class="text-xl font-bold text-gray-800 mb-4">翠巒教會</h5>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q/viewform?usp=pp_url&entry.974815491=%E7%BF%A0%E5%B7%92" class="block w-full py-2 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700">上傳資料</a>
-                </div>
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-purple-100 church-card transition duration-300 text-center">
-                    <h5 class="text-xl font-bold text-gray-800 mb-4">力行教會</h5>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q/viewform?usp=pp_url&entry.974815491=%E5%8A%9B%E8%A1%8C" class="block w-full py-2 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700">上傳資料</a>
-                </div>
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-purple-100 church-card transition duration-300 text-center">
-                    <h5 class="text-xl font-bold text-gray-800 mb-4">紅香教會</h5>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q/viewform?usp=pp_url&entry.974815491=%E7%B4%85%E9%A6%99" class="block w-full py-2 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700">上傳資料</a>
-                </div>
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-purple-100 church-card transition duration-300 text-center">
-                    <h5 class="text-xl font-bold text-gray-800 mb-4">慈峰教會</h5>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q/viewform?usp=pp_url&entry.974815491=%E6%85%88%E5%B3%B0" class="block w-full py-2 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700">上傳資料</a>
-                </div>
-            </div>
+        <section class="mb-16">
+            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title">📍 力行線牧區</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="lixing-list"></div>
         </section>
 
-        <!-- 親春線牧區 -->
-        <section class="mb-12">
-            <div class="pastoral-header bg-white shadow-sm p-4 rounded-r-lg mb-6">
-                <h3 class="text-2xl font-bold text-gray-800 text-purple-900">📍 親春線牧區</h3>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-purple-100 church-card transition duration-300 text-center">
-                    <h5 class="text-xl font-bold text-gray-800 mb-4">精英教會</h5>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q/viewform?usp=pp_url&entry.974815491=%E7%B2%BE%E8%8B%B1" class="block w-full py-2 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700">上傳資料</a>
-                </div>
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-purple-100 church-card transition duration-300 text-center">
-                    <h5 class="text-xl font-bold text-gray-800 mb-4">廬山教會</h5>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q/viewform?usp=pp_url&entry.974815491=%E5%BB%AC%E5%B1%B1" class="block w-full py-2 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700">上傳資料</a>
-                </div>
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-purple-100 church-card transition duration-300 text-center">
-                    <h5 class="text-xl font-bold text-gray-800 mb-4">春陽教會</h5>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q/viewform?usp=pp_url&entry.974815491=%E6%98%A5%E9%99%BD" class="block w-full py-2 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700">上傳資料</a>
-                </div>
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-purple-100 church-card transition duration-300 text-center">
-                    <h5 class="text-xl font-bold text-gray-800 mb-4">親愛教會</h5>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q/viewform?usp=pp_url&entry.974815491=%E8%A6%AA%E6%84%9B結" class="block w-full py-2 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700">上傳資料</a>
-                </div>
-            </div>
+        <section class="mb-16">
+            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title" style="border-left-color: #db2777;">📍 親春線牧區</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="qinchun-list"></div>
         </section>
 
-        <!-- 新望愛牧區 -->
-        <section class="mb-12">
-            <div class="pastoral-header bg-white shadow-sm p-4 rounded-r-lg mb-6">
-                <h3 class="text-2xl font-bold text-gray-800 text-purple-900">📍 新望愛牧區</h3>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-purple-100 church-card transition duration-300 text-center">
-                    <h5 class="text-xl font-bold text-gray-800 mb-4">新生教會</h5>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q/viewform?usp=pp_url&entry.974815491=%E6%96%B0%E7%94%9F" class="block w-full py-2 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700">上傳資料</a>
-                </div>
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-purple-100 church-card transition duration-300 text-center">
-                    <h5 class="text-xl font-bold text-gray-800 mb-4">望美教會</h5>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q/viewform?usp=pp_url&entry.974815491=%E6%9C%9B%E7%BE%8E" class="block w-full py-2 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700">上傳資料</a>
-                </div>
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-purple-100 church-card transition duration-300 text-center">
-                    <h5 class="text-xl font-bold text-gray-800 mb-4">仁愛教會</h5>
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q/viewform?usp=pp_url&entry.974815491=%E4%BB%81%E6%84%9B" class="block w-full py-2 bg-purple-600 text-white rounded-xl font-bold hover:bg-purple-700">上傳資料</a>
-                </div>
-            </div>
+        <section class="mb-16">
+            <h3 class="text-2xl font-bold text-gray-800 mb-8 section-title" style="border-left-color: #059669;">📍 新望愛牧區</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="xinwangai-list"></div>
         </section>
 
-        <footer class="text-center mt-20 text-gray-500 pb-10">
-            <hr class="mb-6">
-            <p>真耶穌教會傳教百年1115西區音樂會籌備會宣傳公關組</p>
+        <footer class="text-center mt-20 text-gray-400 pb-12 border-t pt-8">
+            <p class="font-medium mb-1 text-gray-600 text-sm">真耶穌教會台灣傳教百年115西區音樂會籌備會公關宣傳小組</p>
+            <p class="text-xs uppercase tracking-widest">&copy; 2026 TJC West District Missionary History Project</p>
         </footer>
     </div>
 
+    <script>
+        const FORM_ID = '您的表單ID_請在此填入'; 
+        const ENTRY_ID = 'entry.教會名稱'; 
+        const API_URL = 'https://script.google.com/macros/s/AKfycbzb4Hp2YBHCK2VcWkVmr8enooLLksNcJOnd98frV-O-jr_quonp3huNhTectJDIxZUEAQ/exec';
+
+        const districts = {
+            lixing: { color: 'purple', churches: ['翠巒', '力行', '紅香', '慈峰'] },
+            qinchun: { color: 'pink', churches: ['精英', '廬山', '春陽', '親愛'] },
+            xinwangai: { color: 'emerald', churches: ['新生', '望美', '仁愛'] }
+        };
+
+        function initChurches() {
+            Object.keys(districts).forEach(key => {
+                const zone = districts[key];
+                const container = document.getElementById(`${key}-list`);
+                zone.churches.forEach(name => {
+                    const uploadUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform?${ENTRY_ID}=${encodeURIComponent(name)}`;
+                    const card = document.createElement('div');
+                    card.className = "bg-white p-6 rounded-3xl border border-gray-100 church-card shadow-sm";
+                    card.setAttribute('data-church', name);
+                    card.innerHTML = `
+                        <h5 class="text-xl font-bold text-gray-800 mb-2">${name}教會</h5>
+                        <div class="status-badge text-sm mb-6 text-orange-500 font-medium" data-status-for="${name}">⏳ 檢查狀態中</div>
+                        <a href="${uploadUrl}" target="_blank" class="block w-full py-3 bg-${zone.color}-600 text-white text-center rounded-xl font-bold hover:bg-${zone.color}-700 transition shadow-md">上傳資料</a>
+                    `;
+                    container.appendChild(card);
+                });
+            });
+        }
+
+        async function fetchStatus() {
+            const statusLabel = document.getElementById('update-status');
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                const submittedList = data.submitted || [];
+                document.querySelectorAll('[data-status-for]').forEach(badge => {
+                    const name = badge.getAttribute('data-status-for');
+                    if (submittedList.includes(name)) {
+                        badge.innerHTML = '<i class="fas fa-check-circle mr-1"></i>已收件';
+                        badge.classList.remove('text-orange-500');
+                        badge.classList.add('text-green-600', 'font-bold');
+                        badge.closest('.church-card').classList.add('border-green-200', 'bg-green-50/20');
+                    } else { badge.innerHTML = '⏳ 待繳交'; }
+                });
+                statusLabel.innerHTML = `<i class="fas fa-sync-alt text-green-500 mr-2"></i>同步成功`;
+            } catch (e) { statusLabel.innerHTML = `<i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>狀態同步失敗`; }
+        }
+
+        window.onload = () => { initChurches(); fetchStatus(); };
+    </script>
 </body>
 </html>
