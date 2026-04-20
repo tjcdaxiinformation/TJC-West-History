@@ -73,7 +73,7 @@
         // 1. 您的 Google 表單 ID
         const FORM_ID = '1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q'; 
 
-        // 2. 您的「教會名稱」欄位代號 (已更新為正確的數字 ID)
+        // 2. 您的「教會名稱」欄位代號
         const ENTRY_ID = 'entry.974815491'; 
 
         // 3. 您的 API URL
@@ -92,7 +92,12 @@
                 const container = document.getElementById(`${key}-list`);
                 
                 zone.churches.forEach(name => {
-                    const uploadUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform?usp=pp_url&${ENTRY_ID}=${encodeURIComponent(name)}`;
+                    /**
+                     * 💡 修正說明：
+                     * 加入 continue_draft=false 強制不載入草稿資料。
+                     * 並將 usp=pp_url 放在最前面以符合標準格式。
+                     */
+                    const uploadUrl = `https://docs.google.com/forms/d/e/${FORM_ID}/viewform?usp=pp_url&${ENTRY_ID}=${encodeURIComponent(name)}&continue_draft=false`;
                     
                     const card = document.createElement('div');
                     card.className = "bg-white p-6 rounded-3xl border border-gray-100 church-card shadow-sm";
