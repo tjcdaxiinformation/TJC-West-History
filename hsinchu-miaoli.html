@@ -108,12 +108,15 @@
         </a>
     </footer>
 
-    <!-- JavaScript 核心控制 -->
+    <!-- JavaScript 核心控制 (0秒延遲，瞬間載入免編譯，完全防卡死) -->
     <script>
-        // 【管理員設定】官方 Google 表單連結 (已為竹苗小區套用穩定格式，可自行更新 Form ID)
+        // 【管理員設定一】官方 Google 表單連結
         const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q/viewform";
         
-        // 【核心大功能】Google 試算表 CSV 自動同步連結
+        // 【管理員設定二】指向性自動預填設定：放入竹苗小區真實指向問題 ID
+        const formEntryId = "974815491"; 
+
+        // 【管理員設定三】Google 試算表 CSV 自動同步連結
         const googleSheetCsvUrl = ""; 
 
         // 竹苗小區 13 間教會/祈禱所完整真實數據庫
@@ -199,7 +202,11 @@
             filterChurches();
 
             const isSubmitted = church.status === 'submitted';
-            const paramFormUrl = `${googleFormUrl}?entry.12345678=${encodeURIComponent(church.name + "教會")}`; 
+
+            // 智慧 Entry ID 格式化 (相容 entry.123 或純 123 數字填法)
+            const entryParam = formEntryId.startsWith('entry.') ? formEntryId : `entry.${formEntryId}`;
+            // 拼裝含有指向性預填參數的專屬 Google 表單 URL (已移除結尾的 "教會" 兩個字，直接預填選項名稱，如「養老」、「那羅」)
+            const paramFormUrl = `${googleFormUrl}?${entryParam}=${encodeURIComponent(church.name)}`; 
 
             detailPanel.className = "bg-white rounded-[2.5rem] shadow-xl border border-slate-100 p-8 flex-grow flex flex-col justify-between animate-in fade-in zoom-in duration-300";
             detailPanel.innerHTML = `
@@ -225,8 +232,8 @@
                             </h5>
                             <ol class="text-xs text-indigo-900/80 leading-relaxed font-bold list-decimal pl-4 space-y-1">
                                 <li>點選下方按鈕，在【新視窗】中完成 Google 表單史料填寫與上傳。</li>
+                                <li><strong>指向性已啟用</strong>：表單開啟後會自動為您勾選好【${church.name}】，無需重新選取。</li>
                                 <li>上傳完成後，返回此網頁並點選綠色<strong>【確認已完成上傳】</strong>按鈕。</li>
-                                <li>系統會立即為您記錄並更新狀態，資料將送交公關宣傳組小編處理！</li>
                             </ol>
                         </div>
                         <div class="shrink-0 flex flex-col items-center gap-2 bg-white p-3 rounded-2xl border border-indigo-100/80 shadow-md">
@@ -288,7 +295,7 @@
                 const csvData = await response.text();
                 
                 churches.forEach(church => {
-                    const matchName = `${church.name}教會`;
+                    const matchName = church.name; // 直接匹配 "養老"、"那羅"
                     if (csvData.includes(matchName)) {
                         church.status = 'submitted';
                         localStorage.setItem(`tjc_zhumiao_status_${church.id}`, 'submitted');
