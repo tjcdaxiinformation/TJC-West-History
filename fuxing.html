@@ -70,7 +70,7 @@
             <!-- 進度追蹤看板 -->
             <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 grid grid-cols-3 gap-4 shrink-0">
                 <div class="text-center p-3 bg-slate-50 rounded-2xl border border-slate-100">
-                    <div class="text-2xl font-black text-indigo-600">16</div>
+                    <div id="total-churches" class="text-2xl font-black text-indigo-600">16</div>
                     <div class="text-[10px] text-slate-400 font-bold uppercase mt-1">應繳總教會數</div>
                 </div>
                 <div class="text-center p-3 bg-emerald-50 rounded-2xl border border-emerald-100">
@@ -110,11 +110,13 @@
 
     <!-- JavaScript 核心控制 (0秒延遲，瞬間載入免編譯，完全防卡死) -->
     <script>
-        // 【管理員設定】官方 Google 表單連結（已自動為您置入大溪與復興小區專屬表單）
+        // 【管理員設定一】官方 Google 表單連結 (已為您套用穩定格式)
         const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q/viewform";
         
-        // 【核心大功能】Google 試算表 CSV 自動同步連結
-        // 做法：在您表單對應的 Google 試算表點選「檔案」➔「共用」➔「發布到網路」➔ 選擇「工作表1」並設為「CSV」➔ 複製產生的網址貼在下方引號中。
+        // 【管理員設定二】指向性自動預填設定：放入復興小區真實指向問題 ID
+        const formEntryId = "974815491"; 
+
+        // 【管理員設定三】Google 試算表 CSV 自動同步連結
         const googleSheetCsvUrl = ""; 
 
         // 復興小區 16 間教會/祈禱所完整真實數據庫
@@ -133,8 +135,8 @@
             { id: 12, zone: "復興小區", note: "後山牧區", name: "中巴陵", address: "33644桃園市復興區華陵里8鄰39之3號" },
             { id: 13, zone: "復興小區", note: "後山牧區", name: "三光", address: "33644桃園市復興區三光里6鄰5之1號" },
             { id: 14, zone: "復興小區", note: "後山牧區", name: "高義", address: "33644桃園市復興區高義里4鄰33之7號" },
-            { id: 15, zone: "復興小區", note: "後山牧區", name: "光華", address: "33644桃園市復興區華陵里6鄰18之3號" },
-            { id: 16, zone: "復興小區", note: "後山牧區", name: "爺亨", address: "33644桃園市復興區爺亨32號" }
+            { id: 15, zone: "復興小區", note: "光華", address: "33644桃園市復興區華陵里6鄰18之3號" },
+            { id: 16, zone: "復興小區", note: "爺亨", address: "33644桃園市復興區爺亨32號" }
         ];
 
         let activeChurchId = null;
@@ -142,7 +144,7 @@
         // 初始化各教會狀態 (優先讀取 LocalStorage 記憶)
         churches.forEach(c => {
             const savedStatus = localStorage.getItem(`tjc_fuxing_status_${c.id}`);
-            c.status = savedStatus ? savedStatus : 'pending'; // 預設為待上傳
+            c.status = savedStatus ? savedStatus : 'pending'; 
         });
 
         // 渲染左側名冊
@@ -202,9 +204,11 @@
             filterChurches();
 
             const isSubmitted = church.status === 'submitted';
-            
-            // 智慧自動預填：帶入 entry.12345678 讓表單開啟時直接顯示對應的教會名字
-            const paramFormUrl = `${googleFormUrl}?entry.12345678=${encodeURIComponent(church.name + "教會")}`; 
+
+            // 智慧 Entry ID 格式化 (相容 entry.123 或純 123 數字填法)
+            const entryParam = formEntryId.startsWith('entry.') ? formEntryId : `entry.${formEntryId}`;
+            // 拼裝含有指向性預填參數的專屬 Google 表單 URL
+            const paramFormUrl = `${googleFormUrl}?${entryParam}=${encodeURIComponent(church.name + "教會")}`; 
 
             detailPanel.className = "bg-white rounded-[2.5rem] shadow-xl border border-slate-100 p-8 flex-grow flex flex-col justify-between animate-in fade-in zoom-in duration-300";
             detailPanel.innerHTML = `
@@ -230,8 +234,8 @@
                             </h5>
                             <ol class="text-xs text-indigo-900/80 leading-relaxed font-bold list-decimal pl-4 space-y-1">
                                 <li>點選下方按鈕，在【新視窗】中完成 Google 表單史料填寫與上傳。</li>
+                                <li><strong>指向性已啟用</strong>：表單開啟後會自動為您勾選好【${church.name}教會】，無需重新選取。</li>
                                 <li>上傳完成後，返回此網頁並點選綠色<strong>【確認已完成上傳】</strong>按鈕。</li>
-                                <li>系統會立即為您記錄並更新狀態，資料將送交公關宣傳組小編處理！</li>
                             </ol>
                         </div>
                         <div class="shrink-0 flex flex-col items-center gap-2 bg-white p-3 rounded-2xl border border-indigo-100/80 shadow-md">
@@ -243,8 +247,7 @@
 
                 <!-- 動作按鈕區 -->
                 <div class="mt-8 pt-5 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <!-- target="_blank" 確保在新分頁開啟，不影響本網頁 -->
-                    <a href="${paramFormUrl}" target="_blank" class="w-full md:flex-grow bg-slate-900 hover:bg-indigo-905 text-white py-4 px-6 rounded-2xl font-black text-xs transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
+                    <a href="${paramFormUrl}" target="_blank" class="w-full md:flex-grow bg-slate-900 hover:bg-indigo-950 text-white py-4 px-6 rounded-2xl font-black text-xs transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
                         <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                         開啟 Google 表單填寫並上傳史料
                     </a>
@@ -267,9 +270,9 @@
             const church = churches.find(c => c.id === id);
             if (church) {
                 church.status = 'submitted';
-                localStorage.setItem(`tjc_fuxing_status_${id}`, 'submitted'); // 永久記憶在瀏覽器中
-                selectChurch(id); // 重新繪製詳細面板，觸發「感謝主！❤️」
-                updateStats();   // 更新進度看板件數
+                localStorage.setItem(`tjc_fuxing_status_${id}`, 'submitted'); 
+                selectChurch(id); 
+                updateStats();   
             }
         }
 
@@ -279,9 +282,10 @@
             const pendingCount = churches.length - submittedCount;
             document.getElementById('count-submitted').innerText = submittedCount;
             document.getElementById('count-pending').innerText = pendingCount;
+            document.getElementById('total-churches').innerText = churches.length;
         }
 
-        // 【進階高階功能】自動與 Google 試算表同步資料
+        // 與 Google 試算表同步資料
         async function syncWithGoogleSheet() {
             if (!googleSheetCsvUrl) {
                 alert("💡 管理員提示：\n尚未設定 Google 試算表 CSV 同步連結。\n目前已啟用瀏覽器 LocalStorage 本機記憶機制，您點選的「確認已完成上傳」將會安全儲存於本機中！");
@@ -292,7 +296,6 @@
                 const response = await fetch(googleSheetCsvUrl);
                 const csvData = await response.text();
                 
-                // 解析 CSV (比對填寫資料中的教會名稱)
                 churches.forEach(church => {
                     const matchName = `${church.name}教會`;
                     if (csvData.includes(matchName)) {
@@ -318,7 +321,6 @@
             setTimeout(() => loader.style.display = 'none', 300);
         }
 
-        // 頁面初始化渲染
         renderChurchList(churches);
         updateStats();
     </script>
