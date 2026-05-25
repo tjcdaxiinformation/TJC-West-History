@@ -1,109 +1,80 @@
+```html
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TJC 西區音樂會 - 復興小區史料收集系統</title>
+    <title>復興小區 史料收集</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
-        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f8fafc; }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .btn-base {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem;
+            border-radius: 1rem;
+            border: 1px solid #e2e8f0;
+            background-color: white;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            width: 100%;
+        }
+        .btn-base:hover {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .status-pill {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .status-pending { background-color: #f1f5f9; color: #64748b; }
+        .status-done { background-color: #dcfce7; color: #166534; }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen flex flex-col">
-
-    <header class="bg-slate-900 text-white shadow-lg shrink-0">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <h1 class="text-xl font-black">復興小區 - 史料收集看板</h1>
-            <span class="text-xs bg-indigo-600 px-3 py-1 rounded-full font-bold">復興小區 專屬系統</span>
-        </div>
-    </header>
-
-    <main class="max-w-7xl mx-auto w-full px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8 flex-grow">
-        <section class="lg:col-span-5 bg-white rounded-2xl shadow border border-slate-100 overflow-hidden flex flex-col h-[600px]">
-            <div class="p-4 bg-slate-100 border-b border-slate-200">
-                <input id="search-input" oninput="filterChurches()" type="text" placeholder="搜尋教會名稱..." class="w-full p-2 text-sm rounded-lg border border-slate-300" />
-            </div>
-            <div id="church-list" class="flex-grow overflow-y-auto p-4 space-y-2"></div>
-        </section>
-
-        <section class="lg:col-span-7" id="detail-panel">
-            <div class="bg-white p-10 rounded-2xl shadow border border-slate-100 text-center text-slate-400">
-                <p class="font-bold">請點選左側教會查看詳細資訊</p>
-            </div>
-        </section>
-    </main>
+<body class="bg-gray-50 p-6">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">復興小區 - 史料收集</h1>
+        <div id="church-container" class="space-y-3"></div>
+    </div>
 
     <script>
-        // 設定區：請確保 Entry ID 與您 Google 表單中的 ID 一致
-        const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q/viewform";
-        const formEntryId = "974815491"; 
-
-        const churches = [
-            { id: 1, name: "復興", note: "復興區" },
-            { id: 2, name: "介壽", note: "復興區" },
-            { id: 3, name: "澤仁", note: "復興區" },
-            { id: 4, name: "三民", note: "復興區" },
-            { id: 5, name: "奎輝", note: "復興區" },
-            { id: 6, name: "長興", note: "復興區" },
-            { id: 7, name: "羅浮", note: "復興區" },
-            { id: 8, name: "高義", note: "復興區" },
-            { id: 9, name: "蘇樂", note: "復興區" },
-            { id: 10, name: "巴陵", note: "復興區" },
-            { id: 11, name: "光華", note: "復興區" }
+        // 依照 CSV 修正後的復興小區教會清單
+        const churchList = [
+            "八德", "崎頂", "大溪", "復興", "霞雲", 
+            "義盛", "卡普", "大灣", "奎輝", "雪霧鬧", 
+            "上巴陵", "中巴陵", "三光", "光華", "爺亨"
         ];
 
-        // 初始化狀態
-        churches.forEach(c => {
-            c.status = localStorage.getItem(`tjc_fuxing_status_${c.id}`) || 'pending';
-        });
-
-        function renderChurchList(data) {
-            const container = document.getElementById('church-list');
+        function renderList() {
+            const container = document.getElementById('church-container');
             container.innerHTML = '';
-            data.forEach(c => {
+            
+            churchList.forEach(name => {
+                const isDone = localStorage.getItem(`fuxing_${name}`) === 'true';
                 const btn = document.createElement('button');
-                btn.className = `w-full p-4 rounded-xl border flex justify-between items-center ${c.status === 'submitted' ? 'bg-green-50 border-green-200' : 'bg-white border-slate-200'}`;
-                btn.onclick = () => selectChurch(c.id);
+                btn.className = 'btn-base';
                 btn.innerHTML = `
-                    <span class="font-black text-slate-800">${c.name}教會</span>
-                    <span class="text-[10px] ${c.status === 'submitted' ? 'text-green-600' : 'text-slate-400'} font-bold">
-                        ${c.status === 'submitted' ? '已完成' : '待處理'}
+                    <span class="font-semibold text-gray-700">${name}教會</span>
+                    <span class="status-pill ${isDone ? 'status-done' : 'status-pending'}">
+                        ${isDone ? '已完成' : '未完成'}
                     </span>
                 `;
+                btn.onclick = () => {
+                    const url = `https://docs.google.com/forms/d/e/1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q/viewform?entry.974815491=${encodeURIComponent(name)}`;
+                    window.open(url, '_blank');
+                    localStorage.setItem(`fuxing_${name}`, 'true');
+                    setTimeout(renderList, 500);
+                };
                 container.appendChild(btn);
             });
         }
-
-        function selectChurch(id) {
-            const c = churches.find(ch => ch.id === id);
-            const panel = document.getElementById('detail-panel');
-            const paramFormUrl = `${googleFormUrl}?entry.${formEntryId}=${encodeURIComponent(c.name)}`;
-
-            panel.innerHTML = `
-                <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-100">
-                    <h2 class="text-3xl font-black text-slate-800 mb-6">${c.name}教會</h2>
-                    <a href="${paramFormUrl}" target="_blank" class="block w-full text-center bg-slate-900 text-white py-4 rounded-xl font-black mb-4 hover:bg-slate-800">前往填寫史料表單</a>
-                    <button onclick="confirmUpload(${c.id})" class="w-full bg-green-600 text-white py-4 rounded-xl font-black hover:bg-green-500">確認我已完成上傳</button>
-                </div>
-            `;
-        }
-
-        function confirmUpload(id) {
-            localStorage.setItem(`tjc_fuxing_status_${id}`, 'submitted');
-            churches.find(c => c.id === id).status = 'submitted';
-            renderChurchList(churches);
-            alert("已記錄您的完成狀態！");
-        }
-
-        function filterChurches() {
-            const val = document.getElementById('search-input').value;
-            renderChurchList(churches.filter(c => c.name.includes(val)));
-        }
-
-        renderChurchList(churches);
+        renderList();
     </script>
 </body>
 </html>
+
+```
