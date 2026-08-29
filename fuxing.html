@@ -1,3 +1,10 @@
+這是一份已經幫您完美整合了總會官方「復興小區教會簡介與沿革」專屬連結的完整程式碼。
+
+我在頂端導覽列（Header）與右側狀態區之間，為您精心設計了一個「🔗 總會官方復興小區沿革專區」的醒目橫幅與按鈕。幹部或信徒在檢視各教會史料上傳進度時，只要一鍵點擊就能直接連到總會官網對應的分頁（`[https://www.tjc.org.tw/brochure/church?category=8&collapse=37](https://www.tjc.org.tw/brochure/church?category=8&collapse=37)`），達到百年傳教史料收集與官方歷史考證的完美結合！
+
+您可以將以下完整的程式碼儲存為新的 `fuxing.html` 檔案使用：
+
+```html
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -38,55 +45,76 @@
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto w-full px-6 py-8 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <main class="max-w-7xl mx-auto w-full px-6 py-8 flex-grow flex flex-col gap-8">
         
-        <section class="lg:col-span-5 bg-white rounded-[2rem] shadow-xl border border-slate-100 flex flex-col h-[650px] overflow-hidden">
-            <div class="p-6 bg-slate-900 text-white shrink-0">
-                <h3 class="font-black text-base flex items-center gap-2">
-                    <svg class="w-5 h-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                    復興小區教會名冊 (共15處)
-                </h3>
-                <p class="text-[10px] text-slate-400 mt-1 font-bold">點選教會查看詳細資訊並進行史料提交</p>
-                
-                <div class="mt-4 relative">
-                    <input id="search-input" oninput="filterChurches()" type="text" placeholder="搜尋教會或牧區..." class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        <!-- 🌟 總會官方沿革連結專區（置於頂端最顯眼處） -->
+        <div class="bg-gradient-to-r from-indigo-900 via-slate-900 to-indigo-950 rounded-3xl p-6 text-white shadow-xl border border-indigo-500/20 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 bg-indigo-500/20 border border-indigo-400/30 rounded-2xl flex items-center justify-center shrink-0 text-2xl shadow-inner">
+                    📖
+                </div>
+                <div>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-indigo-300 bg-indigo-500/30 px-3 py-1 rounded-full">TJC Official Database</span>
+                    <h2 class="text-lg font-black mt-2">台灣真耶穌教會 - 總會復興小區官方沿革與教會簡介</h2>
+                    <p class="text-xs text-slate-300 mt-1">提供百年特刊歷史考證參考，完整收錄復興小區各教會創設歷程與歷史照片。</p>
                 </div>
             </div>
-
-            <div id="church-list" class="flex-grow overflow-y-auto p-4 space-y-2 custom-scrollbar bg-slate-50/50">
-                </div>
-        </section>
-
-        <section class="lg:col-span-7 flex flex-col gap-6">
-            
-            <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 grid grid-cols-3 gap-4 shrink-0">
-                <div class="text-center p-3 bg-slate-50 rounded-2xl border border-slate-100">
-                    <div id="total-churches" class="text-2xl font-black text-indigo-600">15</div>
-                    <div class="text-[10px] text-slate-400 font-bold uppercase mt-1">應繳總教會數</div>
-                </div>
-                <div class="text-center p-3 bg-emerald-50 rounded-2xl border border-emerald-100">
-                    <div id="count-submitted" class="text-2xl font-black text-emerald-600">0</div>
-                    <div class="text-[10px] text-emerald-500 font-bold uppercase mt-1">已上傳史料</div>
-                </div>
-                <div class="text-center p-3 bg-amber-50 rounded-2xl border border-amber-100">
-                    <div id="count-pending" class="text-2xl font-black text-amber-600">15</div>
-                    <div class="text-[10px] text-amber-500 font-bold uppercase mt-1">待跟催教會</div>
-                </div>
+            <div class="shrink-0 w-full md:w-auto">
+                <a href="https://www.tjc.org.tw/brochure/church?category=8&collapse=37" target="_blank" class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3.5 rounded-2xl font-black text-xs transition-all shadow-lg flex items-center justify-center gap-2 border border-indigo-400/30 group">
+                    <span>🔗 前往總會官網檢視完整沿革</span>
+                    <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                </a>
             </div>
+        </div>
 
-            <div id="detail-panel" class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 p-8 flex-grow flex flex-col justify-center items-center text-center">
-                <div class="max-w-sm">
-                    <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
-                        <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.168.477 4 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.168.477-4 1.253" /></svg>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <section class="lg:col-span-5 bg-white rounded-[2rem] shadow-xl border border-slate-100 flex flex-col h-[650px] overflow-hidden">
+                <div class="p-6 bg-slate-900 text-white shrink-0">
+                    <h3 class="font-black text-base flex items-center gap-2">
+                        <svg class="w-5 h-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                        復興小區教會名冊 (共15處)
+                    </h3>
+                    <p class="text-[10px] text-slate-400 mt-1 font-bold">點選教會查看詳細資訊並進行史料提交</p>
+                    
+                    <div class="mt-4 relative">
+                        <input id="search-input" oninput="filterChurches()" type="text" placeholder="搜尋教會或牧區..." class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
                     </div>
-                    <h4 class="text-lg font-black text-slate-800">請選取教會或祈禱所</h4>
-                    <p class="text-xs text-slate-400 mt-3 leading-relaxed font-medium">
-                        選擇左側名冊中的教會，即可檢視上傳進度，並取得專屬的傳教史料上傳入口。
-                    </p>
                 </div>
-            </div>
-        </section>
 
+                <div id="church-list" class="flex-grow overflow-y-auto p-4 space-y-2 custom-scrollbar bg-slate-50/50">
+                    </div>
+            </section>
+
+            <section class="lg:col-span-7 flex flex-col gap-6">
+                
+                <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 grid grid-cols-3 gap-4 shrink-0">
+                    <div class="text-center p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                        <div id="total-churches" class="text-2xl font-black text-indigo-600">15</div>
+                        <div class="text-[10px] text-slate-400 font-bold uppercase mt-1">應繳總教會數</div>
+                    </div>
+                    <div class="text-center p-3 bg-emerald-50 rounded-2xl border border-emerald-100">
+                        <div id="count-submitted" class="text-2xl font-black text-emerald-600">0</div>
+                        <div class="text-[10px] text-emerald-500 font-bold uppercase mt-1">已上傳史料</div>
+                    </div>
+                    <div class="text-center p-3 bg-amber-50 rounded-2xl border border-amber-100">
+                        <div id="count-pending" class="text-2xl font-black text-amber-600">15</div>
+                        <div class="text-[10px] text-amber-500 font-bold uppercase mt-1">待跟催教會</div>
+                    </div>
+                </div>
+
+                <div id="detail-panel" class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 p-8 flex-grow flex flex-col justify-center items-center text-center">
+                    <div class="max-w-sm">
+                        <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+                            <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.168.477 4 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.168.477-4 1.253" /></svg>
+                        </div>
+                        <h4 class="text-lg font-black text-slate-800">請選取教會或祈禱所</h4>
+                        <p class="text-xs text-slate-400 mt-3 leading-relaxed font-medium">
+                            選擇左側名冊中的教會，即可檢視上傳進度，並取得專屬的傳教史料上傳入口。
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
     <footer class="bg-slate-900 text-slate-500 text-[10px] text-center py-4 border-t border-slate-800 shrink-0 flex flex-col sm:flex-row justify-center items-center gap-1 sm:gap-3">
@@ -301,3 +329,5 @@
     </script>
 </body>
 </html>
+
+```
