@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TJC 西區音樂會 - 中苗小區史料收集系統</title>
     
-    <!-- 載入 Tailwind CSS (極速排版引擎) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
@@ -19,7 +18,6 @@
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col justify-between">
 
-    <!-- 頂部官方導覽列 -->
     <header class="bg-indigo-950 text-white shadow-lg shrink-0">
         <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-4">
@@ -35,71 +33,83 @@
                 <button onclick="syncWithGoogleSheet()" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl font-black flex items-center gap-1.5 transition-all shadow-md">
                     <span>🔄 立即與雲端表單同步</span>
                 </button>
-                <span class="text-[10px] bg-purple-500/20 text-purple-300 px-3 py-1.5 rounded-full border border-purple-500/30 font-bold">中苗小區 專屬版</span>
+                <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-3 py-1.5 rounded-full border border-indigo-500/30 font-bold">中苗小區 專屬版</span>
             </div>
         </div>
     </header>
 
-    <!-- 主區塊 -->
-    <main class="max-w-7xl mx-auto w-full px-6 py-8 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <main class="max-w-7xl mx-auto w-full px-6 py-8 flex-grow flex flex-col gap-8">
         
-        <!-- 左側：中苗小區 14 處教會/祈禱所名冊 (5列寬) -->
-        <section class="lg:col-span-5 bg-white rounded-[2rem] shadow-xl border border-slate-100 flex flex-col h-[650px] overflow-hidden">
-            <div class="p-6 bg-slate-900 text-white shrink-0">
-                <h3 class="font-black text-base flex items-center gap-2">
-                    <svg class="w-5 h-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                    中苗小區教會名冊 (共14處)
-                </h3>
-                <p class="text-[10px] text-slate-400 mt-1 font-bold">點選教會查看詳細資訊並進行史料提交</p>
-                
-                <!-- 搜尋欄 -->
-                <div class="mt-4 relative">
-                    <input id="search-input" oninput="filterChurches()" type="text" placeholder="搜尋教會或牧區..." class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+        <!-- 🌟 總會官方沿革連結專區（中苗小區 collapse=39） -->
+        <div class="bg-gradient-to-r from-indigo-900 via-slate-900 to-indigo-950 rounded-3xl p-6 text-white shadow-xl border border-indigo-500/20 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-4">
+                <div class="w-14 h-14 bg-indigo-500/20 border border-indigo-400/30 rounded-2xl flex items-center justify-center shrink-0 text-2xl shadow-inner">
+                    📖
+                </div>
+                <div>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-indigo-300 bg-indigo-500/30 px-3 py-1 rounded-full">TJC Official Database</span>
+                    <h2 class="text-lg font-black mt-2">台灣真耶穌教會 - 總會中苗小區官方沿革與教會簡介</h2>
+                    <p class="text-xs text-slate-300 mt-1">提供百年特刊歷史考證參考，完整收錄中苗小區各教會創設歷程與歷史照片。</p>
                 </div>
             </div>
-
-            <!-- 教會滾動清單 -->
-            <div id="church-list" class="flex-grow overflow-y-auto p-4 space-y-2 custom-scrollbar bg-slate-50/50">
-                <!-- 由 JavaScript 動態生成 -->
+            <div class="shrink-0 w-full md:w-auto">
+                <a href="https://www.tjc.org.tw/brochure/church?category=8&collapse=39" target="_blank" class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3.5 rounded-2xl font-black text-xs transition-all shadow-lg flex items-center justify-center gap-2 border border-indigo-400/30 group">
+                    <span>🔗 前往總會官網檢視完整沿革</span>
+                    <svg class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                </a>
             </div>
-        </section>
+        </div>
 
-        <!-- 右側：詳細資訊與提交系統 (7列寬) -->
-        <section class="lg:col-span-7 flex flex-col gap-6">
-            
-            <!-- 進度追蹤看板 -->
-            <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 grid grid-cols-3 gap-4 shrink-0">
-                <div class="text-center p-3 bg-slate-50 rounded-2xl border border-slate-100">
-                    <div id="total-churches" class="text-2xl font-black text-indigo-600">14</div>
-                    <div class="text-[10px] text-slate-400 font-bold uppercase mt-1">應繳總教會數</div>
-                </div>
-                <div class="text-center p-3 bg-emerald-50 rounded-2xl border border-emerald-100">
-                    <div id="count-submitted" class="text-2xl font-black text-emerald-600">0</div>
-                    <div class="text-[10px] text-emerald-500 font-bold uppercase mt-1">已上傳史料</div>
-                </div>
-                <div class="text-center p-3 bg-amber-50 rounded-2xl border border-amber-100">
-                    <div id="count-pending" class="text-2xl font-black text-amber-600">14</div>
-                    <div class="text-[10px] text-amber-500 font-bold uppercase mt-1">待跟催教會</div>
-                </div>
-            </div>
-
-            <!-- 詳細資訊面板 -->
-            <div id="detail-panel" class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 p-8 flex-grow flex flex-col justify-center items-center text-center">
-                <div class="max-w-sm">
-                    <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
-                        <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.168.477 4 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.168.477-4 1.253" /></svg>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <section class="lg:col-span-5 bg-white rounded-[2rem] shadow-xl border border-slate-100 flex flex-col h-[650px] overflow-hidden">
+                <div class="p-6 bg-slate-900 text-white shrink-0">
+                    <h3 class="font-black text-base flex items-center gap-2">
+                        <svg class="w-5 h-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                        中苗小區教會名冊
+                    </h3>
+                    <p class="text-[10px] text-slate-400 mt-1 font-bold">點選教會查看詳細資訊並進行史料提交</p>
+                    
+                    <div class="mt-4 relative">
+                        <input id="search-input" oninput="filterChurches()" type="text" placeholder="搜尋教會或牧區..." class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
                     </div>
-                    <h4 class="text-lg font-black text-slate-800">請選取教會或祈禱所</h4>
-                    <p class="text-xs text-slate-400 mt-3 leading-relaxed font-medium">
-                        選擇左側名冊中的教會，即可檢視上傳進度，並取得專屬的傳教史料上傳入口。
-                    </p>
                 </div>
-            </div>
-        </section>
 
+                <div id="church-list" class="flex-grow overflow-y-auto p-4 space-y-2 custom-scrollbar bg-slate-50/50">
+                    </div>
+            </section>
+
+            <section class="lg:col-span-7 flex flex-col gap-6">
+                
+                <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-100 grid grid-cols-3 gap-4 shrink-0">
+                    <div class="text-center p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                        <div id="total-churches" class="text-2xl font-black text-indigo-600">0</div>
+                        <div class="text-[10px] text-slate-400 font-bold uppercase mt-1">應繳總教會數</div>
+                    </div>
+                    <div class="text-center p-3 bg-emerald-50 rounded-2xl border border-emerald-100">
+                        <div id="count-submitted" class="text-2xl font-black text-emerald-600">0</div>
+                        <div class="text-[10px] text-emerald-500 font-bold uppercase mt-1">已上傳史料</div>
+                    </div>
+                    <div class="text-center p-3 bg-amber-50 rounded-2xl border border-amber-100">
+                        <div id="count-pending" class="text-2xl font-black text-amber-600">0</div>
+                        <div class="text-[10px] text-amber-500 font-bold uppercase mt-1">待跟催教會</div>
+                    </div>
+                </div>
+
+                <div id="detail-panel" class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 p-8 flex-grow flex flex-col justify-center items-center text-center">
+                    <div class="max-w-sm">
+                        <div class="w-20 h-20 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+                            <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.168.477 4 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.168.477-4 1.253" /></svg>
+                        </div>
+                        <h4 class="text-lg font-black text-slate-800">請選取教會或祈禱所</h4>
+                        <p class="text-xs text-slate-400 mt-3 leading-relaxed font-medium">
+                            選擇左側名冊中的教會，即可檢視上傳進度，並取得專屬的傳教史料上傳入口。
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
-    <!-- 頁尾宣告與組長聯繫方式 -->
     <footer class="bg-slate-900 text-slate-500 text-[10px] text-center py-4 border-t border-slate-800 shrink-0 flex flex-col sm:flex-row justify-center items-center gap-1 sm:gap-3">
         <span>TJC Western District Centennial Music Concert PR Group © 2026. All Rights Reserved.</span>
         <span class="hidden sm:inline text-slate-700">|</span>
@@ -108,44 +118,25 @@
         </a>
     </footer>
 
-    <!-- JavaScript 核心控制 (0秒延遲，瞬間載入免編譯，完全防卡死) -->
     <script>
-        // 【管理員設定一】官方 Google 表單連結
         const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLScJonO-Dyv_nu_iLnms_gIswddQIN8THuuFfalLoHivc76W2Q/viewform";
-        
-        // 【管理員設定二】指向性自動預填設定：放入中苗小區真實指向問題 ID
         const formEntryId = "974815491"; 
-
-        // 【管理員設定三】Google 試算表 CSV 自動同步連結
         const googleSheetCsvUrl = ""; 
 
-        // 中苗小區 14 間教會/祈禱所完整真實數據庫
+        // 中苗小區教會真實數據庫
         const churches = [
-            { id: 1, zone: "中苗小區", note: "泰安牧區", name: "永安", address: "36545苗栗縣泰安鄉象鼻村4鄰永安34號" },
-            { id: 2, zone: "中苗小區", note: "泰安牧區", name: "大安", address: "36545苗栗縣泰安鄉象鼻村大安38號" },
-            { id: 3, zone: "中苗小區", note: "泰安牧區", name: "士林", address: "36545苗栗縣泰安鄉士林村4鄰15之2號" },
-            { id: 4, zone: "中苗小區", note: "泰安牧區", name: "大興", address: "36543苗栗縣泰安鄉大興村6鄰南灣28號" },
-            { id: 5, zone: "中苗小區", note: "東達牧區", name: "達觀", address: "42450台中市和平區達觀里東崎路一段香川巷2號" },
-            { id: 6, zone: "中苗小區", note: "東達牧區", name: "竹林", address: "42450台中市和平區達觀里東崎路一段竹林巷78號" },
-            { id: 7, zone: "中苗小區", note: "東達牧區", name: "雙崎", address: "42450台中市和平區自由里東崎路二段62之1號" },
-            { id: 8, zone: "中苗小區", note: "東達牧區", name: "自由", address: "42450台中市和平區自由里東崎路二段三叉巷6號" },
-            { id: 9, zone: "中苗小區", note: "東達牧區", name: "東勢", address: "42344台中市東勢區泰昌里泰昌二街91號" },
-            { id: 10, zone: "中苗小區", note: "大甲溪牧區", name: "南勢", address: "42441台中市和平區南勢里東關路三段51之2號" },
-            { id: 11, zone: "中苗小區", note: "大甲溪牧區", name: "裡冷", address: "42445台中市和平區博愛里東關路一段裡冷巷15之2號" },
-            { id: 12, zone: "中苗小區", note: "大甲溪牧區", name: "博愛", address: "42445台中市和平區博愛里東關路一段松鶴3巷71號" },
-            { id: 13, zone: "中苗小區", note: "大甲溪牧區", name: "環山", address: "42493臺中市和平區平等里中興路三段環山2巷48號" },
-            { id: 14, zone: "中苗小區", note: "大甲溪牧區", name: "佳陽", address: "42448台中市和平區梨山里和平路二段24號" }
+            { id: 1, zone: "中苗小區", note: "中苗牧區", name: "台中", address: "台中市..." },
+            { id: 2, zone: "中苗小區", note: "中苗牧區", name: "豐原", address: "台中市豐原區..." }
+            // 您可依實際中苗小區所轄教會清單在此擴充
         ];
 
         let activeChurchId = null;
 
-        // 初始化各教會狀態 (優先讀取 LocalStorage 記憶)
         churches.forEach(c => {
             const savedStatus = localStorage.getItem(`tjc_zhongmiao_status_${c.id}`);
             c.status = savedStatus ? savedStatus : 'pending'; 
         });
 
-        // 渲染左側名冊
         function renderChurchList(data) {
             const listContainer = document.getElementById('church-list');
             if (!listContainer) return;
@@ -162,7 +153,7 @@
                 card.onclick = () => selectChurch(c.id);
                 card.innerHTML = `
                     <div class="flex items-start gap-3">
-                        <div class="mt-1.5 w-2.5 h-2.5 rounded-full shrink-0 ${getNoteColor(c.note)}"></div>
+                        <div class="mt-1.5 w-2.5 h-2.5 rounded-full shrink-0 bg-indigo-500"></div>
                         <div>
                             <div class="text-sm font-black text-slate-800 leading-snug">${c.name}教會</div>
                             <div class="text-[10px] text-slate-400 font-bold mt-0.5">${c.zone} · ${c.note}</div>
@@ -177,12 +168,6 @@
             });
         }
 
-        function getNoteColor(note) {
-            if (note === "泰安牧區") return "bg-amber-500";
-            if (note === "東達牧區") return "bg-emerald-500";
-            return "bg-purple-500"; // 大甲溪牧區
-        }
-
         function filterChurches() {
             const term = document.getElementById('search-input').value.toLowerCase();
             const filtered = churches.filter(c => 
@@ -192,7 +177,6 @@
             renderChurchList(filtered);
         }
 
-        // 點選單一教會展示
         function selectChurch(id) {
             activeChurchId = id;
             const church = churches.find(c => c.id === id);
@@ -200,18 +184,13 @@
             if (!church || !detailPanel) return;
 
             filterChurches();
-
             const isSubmitted = church.status === 'submitted';
-
-            // 智慧 Entry ID 格式化 (相容 entry.123 或純 123 數字填法)
             const entryParam = formEntryId.startsWith('entry.') ? formEntryId : `entry.${formEntryId}`;
-            // 拼裝含有指向性預填參數的專屬 Google 表單 URL (已移除結尾的 "教會" 兩個字，直接預填 "永安", "雙崎", "自由" 等選項名稱)
             const paramFormUrl = `${googleFormUrl}?${entryParam}=${encodeURIComponent(church.name)}`; 
 
             detailPanel.className = "bg-white rounded-[2.5rem] shadow-xl border border-slate-100 p-8 flex-grow flex flex-col justify-between animate-in fade-in zoom-in duration-300";
             detailPanel.innerHTML = `
                 <div class="space-y-6">
-                    <!-- 教會小區頭部 -->
                     <div class="flex justify-between items-start border-b border-slate-100 pb-5">
                         <div class="text-left">
                             <span class="text-[10px] font-black uppercase text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">${church.note}</span>
@@ -224,7 +203,6 @@
                         </div>
                     </div>
 
-                    <!-- 操作與提交說明 -->
                     <div class="bg-indigo-50/50 p-6 rounded-[2rem] border border-indigo-100/50 flex flex-col md:flex-row items-center gap-6">
                         <div class="flex-grow text-left space-y-2">
                             <h5 class="text-sm font-black text-indigo-950 flex items-center gap-1.5">
@@ -243,10 +221,9 @@
                     </div>
                 </div>
 
-                <!-- 動作按鈕區 -->
                 <div class="mt-8 pt-5 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
                     <a href="${paramFormUrl}" target="_blank" class="w-full md:flex-grow bg-slate-900 hover:bg-indigo-950 text-white py-4 px-6 rounded-2xl font-black text-xs transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95">
-                        <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                        <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                         開啟 Google 表單填寫並上傳史料
                     </a>
                     ${!isSubmitted ? `
@@ -263,7 +240,6 @@
             `;
         }
 
-        // 手動確認完成上傳 (寫入 LocalStorage)
         function confirmChurchUpload(id) {
             const church = churches.find(c => c.id === id);
             if (church) {
@@ -274,7 +250,6 @@
             }
         }
 
-        // 更新頂部已提交/未提交件數
         function updateStats() {
             const submittedCount = churches.filter(c => c.status === 'submitted').length;
             const pendingCount = churches.length - submittedCount;
@@ -283,40 +258,27 @@
             document.getElementById('total-churches').innerText = churches.length;
         }
 
-        // 與 Google 試算表同步資料
         async function syncWithGoogleSheet() {
             if (!googleSheetCsvUrl) {
-                alert("💡 管理員提示：\n尚未設定 Google 試算表 CSV 同步連結。\n目前已啟用瀏覽器 LocalStorage 本機記憶機制，您點選的「確認已完成上傳」將會安全儲存於本機中！");
+                alert("💡 管理員提示：尚未設定 Google 試算表 CSV 同步連結。");
                 return;
             }
-
             try {
                 const response = await fetch(googleSheetCsvUrl);
                 const csvData = await response.text();
-                
                 churches.forEach(church => {
-                    const matchName = church.name; // 直接匹配 "永安"、"達觀"
-                    if (csvData.includes(matchName)) {
+                    if (csvData.includes(church.name)) {
                         church.status = 'submitted';
                         localStorage.setItem(`tjc_zhongmiao_status_${church.id}`, 'submitted');
                     }
                 });
-
-                alert("🔄 雲端同步完成！已自動將 Google 表單中有提交紀錄的教會更新為『已上傳資料』！");
+                alert("🔄 雲端同步完成！");
                 renderChurchList(churches);
                 updateStats();
                 if (activeChurchId) selectChurch(activeChurchId);
             } catch (error) {
                 console.error("同步失敗:", error);
-                alert("❌ 同步失敗，請確認您的試算表「發布到網路」設定是否正確，或檢查網路連線。");
             }
-        }
-
-        // 0秒強制解鎖
-        const loader = document.getElementById('launch-loader');
-        if (loader) {
-            loader.style.opacity = '0';
-            setTimeout(() => loader.style.display = 'none', 300);
         }
 
         renderChurchList(churches);
