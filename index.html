@@ -3,173 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>西區宣道歷史數位典藏系統</title>
+    <title>西區教會傳教史數位典藏計畫 - 總覽儀表板</title>
+    
+    <!-- 載入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background-color: #f0f2f5;
-            scroll-behavior: smooth;
-        }
-        .hero-gradient {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-        }
-        .district-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .district-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .step-number {
-            background: rgba(59, 130, 246, 0.1);
-            color: #2563eb;
-        }
-        .line-button {
-            background-color: #06C755;
-            transition: all 0.3s ease;
-        }
-        .line-button:hover {
-            background-color: #05a647;
-            transform: scale(1.05);
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f8fafc; margin: 0; }
+        .bar-animate { transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
     </style>
 </head>
-<body class="text-gray-800">
+<body class="min-h-screen flex flex-col">
 
-    <!-- 導覽列 -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-church text-blue-600 text-2xl"></i>
-                    <span class="text-xl font-bold text-gray-900 tracking-tight">西區宣道歷史數位典藏</span>
+    <!-- 頂部官方導覽列 -->
+    <header class="bg-indigo-950 text-white shadow-lg shrink-0 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center p-0.5 shadow-md">
+                    <img src="百週年.png" alt="100" class="w-full h-full object-contain" onerror="this.outerHTML='<span class=\'text-indigo-950 font-black text-xs\'>100th</span>'" />
                 </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#districts" class="text-gray-600 hover:text-blue-600 font-medium transition">選擇小區</a>
-                    <a href="#guide" class="text-gray-600 hover:text-blue-600 font-medium transition">操作指引</a>
-                    <a href="#contact" class="text-gray-600 hover:text-blue-600 font-medium transition">聯絡窗口</a>
+                <div>
+                    <p class="text-[10px] font-black uppercase text-indigo-300 tracking-[0.2em] leading-none mb-1">TJC Western District Centennial</p>
+                    <h1 class="text-xl font-black leading-tight">西區教會傳教史數位典藏計畫</h1>
                 </div>
             </div>
-        </div>
-    </nav>
-
-    <!-- 英雄視覺區 -->
-    <header class="hero-gradient py-20 text-white text-center">
-        <div class="max-w-5xl mx-auto px-4">
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-6 text-white">傳承信仰，記錄恩典</h1>
-            <p class="text-xl md:text-2xl text-blue-100 mb-10 max-w-3xl mx-auto leading-relaxed">
-                西區四大小區、十三個牧區、四十四間教會。<br>
-                邀您一同完成這場跨世紀的宣道歷史收集計畫。
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#districts" class="bg-white text-blue-700 px-8 py-3 rounded-full font-bold text-lg hover:bg-blue-50 transition shadow-lg">
-                    立即開始上傳資料
-                </a>
+            <div class="flex items-center gap-3">
+                <button onclick="masterSync()" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl font-black flex items-center gap-1.5 transition-all shadow-md">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.228 12H19" /></svg>
+                    <span>同步雲端最新進度</span>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- 小區選擇卡片區 -->
-    <main id="districts" class="max-w-7xl mx-auto px-4 py-16">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-gray-900 text-gray-900">請選擇所屬小區</h2>
-            <div class="h-1 w-20 bg-blue-600 mx-auto mt-4 rounded-full"></div>
+    <!-- 主內容區 -->
+    <main class="max-w-6xl mx-auto px-6 py-8 flex-grow w-full space-y-8">
+        
+        <!-- 全區總進度與引言 -->
+        <div class="text-center space-y-3">
+            <h2 class="text-3xl font-black text-slate-800 tracking-tight">小區動員進度看板</h2>
+            <p class="text-sm text-slate-500 font-bold">即時統整復興、竹苗、中苗、南投四區上傳戰況，齊心完成百年歷史拼圖。</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <a href="fuxing.html" class="district-card bg-white rounded-3xl p-8 text-center border border-gray-100 block group">
-                <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <i class="fas fa-mountain text-3xl"></i>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- 左側：激勵排行榜 (8列寬) -->
+            <section class="lg:col-span-8 bg-white rounded-[2rem] shadow-xl border border-slate-100 p-8 flex flex-col">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-black text-slate-800 flex items-center gap-2">
+                        <svg class="w-6 h-6 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                        各區上傳完成度排行
+                    </h3>
+                    <span class="text-[10px] bg-slate-100 text-slate-500 px-3 py-1 rounded-full font-bold">自動由高至低排序</span>
                 </div>
-                <h3 class="text-2xl font-bold mb-3 text-gray-800">復興小區</h3>
-                <p class="text-gray-500 mb-6">前山、中山、後山</p>
-                <span class="inline-flex items-center text-emerald-600 font-bold">進入專區 <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i></span>
-            </a>
-            <a href="hsinchu-miaoli.html" class="district-card bg-white rounded-3xl p-8 text-center border border-gray-100 block group">
-                <div class="w-20 h-20 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <i class="fas fa-tree text-3xl"></i>
+                
+                <!-- 動態生成的長條圖 -->
+                <div id="leaderboard" class="space-y-6 flex-grow flex flex-col justify-center">
+                    <!-- Javascript 渲染區 -->
                 </div>
-                <h3 class="text-2xl font-bold mb-3 text-gray-800">竹苗小區</h3>
-                <p class="text-gray-500 mb-6">五峰、尖石、中港溪</p>
-                <span class="inline-flex items-center text-blue-600 font-bold">進入專區 <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i></span>
-            </a>
-            <a href="taichung-miaoli.html" class="district-card bg-white rounded-3xl p-8 text-center border border-gray-100 block group">
-                <div class="w-20 h-20 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <i class="fas fa-water text-3xl"></i>
+            </section>
+
+            <!-- 右側：全區總計 (4列寬) -->
+            <section class="lg:col-span-4 bg-gradient-to-br from-indigo-900 to-slate-900 rounded-[2rem] shadow-xl border border-indigo-800 p-8 text-white flex flex-col items-center justify-center text-center">
+                <h3 class="text-sm font-black text-indigo-300 tracking-widest uppercase mb-6">西區總計完成進度</h3>
+                
+                <div class="relative w-48 h-48 mb-6">
+                    <!-- SVG 環形進度條 -->
+                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="8"></circle>
+                        <circle id="total-progress-circle" cx="50" cy="50" r="45" fill="none" stroke="#f59e0b" stroke-width="8" stroke-dasharray="283" stroke-dashoffset="283" class="transition-all duration-1000 ease-out" stroke-linecap="round"></circle>
+                    </svg>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center">
+                        <span id="total-percent" class="text-4xl font-black">0%</span>
+                    </div>
                 </div>
-                <h3 class="text-2xl font-bold mb-3 text-gray-800">中苗小區</h3>
-                <p class="text-gray-500 mb-6">東達、大甲溪、泰安</p>
-                <span class="inline-flex items-center text-amber-600 font-bold">進入專區 <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i></span>
-            </a>
-            <a href="nantou.html" class="district-card bg-white rounded-3xl p-8 text-center border border-gray-100 block group">
-                <div class="w-20 h-20 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <i class="fas fa-cloud-sun text-3xl"></i>
+
+                <div class="bg-white/10 px-6 py-3 rounded-2xl border border-white/20 w-full">
+                    <p class="text-xs text-indigo-200 font-bold mb-1">已繳 / 應繳教會數</p>
+                    <p class="text-2xl font-black"><span id="total-submitted" class="text-amber-400">0</span> <span class="text-lg opacity-50">/ 54</span></p>
                 </div>
-                <h3 class="text-2xl font-bold mb-3 text-gray-800">南投小區</h3>
-                <p class="text-gray-500 mb-6">力行、親春、新望愛</p>
-                <span class="inline-flex items-center text-purple-600 font-bold">進入專區 <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i></span>
-            </a>
+            </section>
         </div>
+
+        <!-- 小區專屬入口網格 -->
+        <div class="pt-4">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="h-px bg-slate-200 flex-grow"></div>
+                <h3 class="text-base font-black text-slate-800">進入各區專屬上傳系統</h3>
+                <div class="h-px bg-slate-200 flex-grow"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- 復興小區 -->
+                <a href="fuxing.html" class="block bg-white p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all border-2 border-slate-100 hover:border-amber-400 group">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center font-black text-lg">復</div>
+                        <span class="text-slate-300 group-hover:text-amber-500 transition-colors transform group-hover:translate-x-1">➔</span>
+                    </div>
+                    <h4 class="text-lg font-black text-slate-800 mb-1">復興小區入口</h4>
+                    <p class="text-[10px] text-slate-400 font-bold">前山/中山/後山 (共15處)</p>
+                </a>
+                
+                <!-- 竹苗小區 -->
+                <a href="zhumiao.html" class="block bg-white p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all border-2 border-slate-100 hover:border-emerald-400 group">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-black text-lg">竹</div>
+                        <span class="text-slate-300 group-hover:text-emerald-500 transition-colors transform group-hover:translate-x-1">➔</span>
+                    </div>
+                    <h4 class="text-lg font-black text-slate-800 mb-1">竹苗小區入口</h4>
+                    <p class="text-[10px] text-slate-400 font-bold">尖石/五峰/中港溪 (共13處)</p>
+                </a>
+
+                <!-- 中苗小區 -->
+                <a href="zhongmiao.html" class="block bg-white p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all border-2 border-slate-100 hover:border-purple-400 group">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-black text-lg">中</div>
+                        <span class="text-slate-300 group-hover:text-purple-500 transition-colors transform group-hover:translate-x-1">➔</span>
+                    </div>
+                    <h4 class="text-lg font-black text-slate-800 mb-1">中苗小區入口</h4>
+                    <p class="text-[10px] text-slate-400 font-bold">泰安/東達/大甲溪 (共14處)</p>
+                </a>
+
+                <!-- 南投小區 -->
+                <a href="nantou.html" class="block bg-white p-6 rounded-3xl shadow-sm hover:shadow-xl transition-all border-2 border-slate-100 hover:border-rose-400 group">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center font-black text-lg">投</div>
+                        <span class="text-slate-300 group-hover:text-rose-500 transition-colors transform group-hover:translate-x-1">➔</span>
+                    </div>
+                    <h4 class="text-lg font-black text-slate-800 mb-1">南投小區入口</h4>
+                    <p class="text-[10px] text-slate-400 font-bold">力行/親春/新望愛 (共12處)</p>
+                </a>
+            </div>
+        </div>
+
     </main>
 
-    <!-- 操作指引 -->
-    <section id="guide" class="bg-gray-50 py-16">
-        <div class="max-w-5xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold text-gray-900 mb-12 text-gray-900">上傳三步驟</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="flex flex-col items-center">
-                    <div class="w-12 h-12 step-number rounded-full flex items-center justify-center text-2xl font-bold mb-4">1</div>
-                    <h4 class="text-xl font-bold mb-2">選擇所屬教會</h4>
-                    <p class="text-gray-600">從小區入口進入，找到您的牧區與教會卡片。</p>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="w-12 h-12 step-number rounded-full flex items-center justify-center text-2xl font-bold mb-4">2</div>
-                    <h4 class="text-xl font-bold mb-2">準備檔案</h4>
-                    <p class="text-gray-600">包含宣道史 PDF、歷史照片 JPG 與口述影片 MP4。</p>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="w-12 h-12 step-number rounded-full flex items-center justify-center text-2xl font-bold mb-4">3</div>
-                    <h4 class="text-xl font-bold mb-2">點擊上傳</h4>
-                    <p class="text-gray-600">點選上傳按鈕跳轉至 Google 表單完成資料遞交。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 聯絡窗口區塊 -->
-    <section id="contact" class="py-20 bg-white text-gray-800">
-        <div class="max-w-4xl mx-auto px-4">
-            <div class="bg-blue-50 rounded-3xl p-8 md:p-12 text-center border-2 border-blue-100 shadow-xl">
-                <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-600 text-white rounded-full mb-6">
-                    <i class="fas fa-headset text-2xl text-white"></i>
-                </div>
-                <h2 class="text-3xl font-bold text-gray-900 mb-4 text-gray-900">遇到操作困難嗎？</h2>
-                <p class="text-lg text-gray-600 mb-10">
-                    如果您在資料上傳、檔案格式或是網頁操作上有任何疑問，<br class="hidden md:block">
-                    歡迎透過 LINE 與專案小組直接聯繫。
-                </p>
-                
-                <div class="flex flex-col items-center space-y-4">
-                    <!-- LINE 按鈕 -->
-                    <a href="https://line.me/ti/p/U3XGjc8GKN" target="_blank" class="line-button text-white px-10 py-4 rounded-2xl font-bold text-xl flex items-center shadow-lg">
-                        <i class="fab fa-line text-3xl mr-3 text-white"></i> 點我加入專案窗口 LINE
-                    </a>
-                    <p class="text-sm text-gray-400">真耶穌教會台灣傳教百年115西區音樂會籌備會公關宣傳小組</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 頁尾 -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-400 mb-2 font-medium">真耶穌教會台灣傳教百年115西區音樂會籌備會公關宣傳小組</p>
-            <p class="text-xs text-gray-500 uppercase tracking-widest">&copy; 2026 TJC West District History Project</p>
-        </div>
+    <footer class="bg-slate-900 text-slate-500 text-[10px] text-center py-4 shrink-0 mt-8">
+        <span>TJC Western District Centennial Music Concert PR Group © 2026. All Rights Reserved.</span>
     </footer>
 
+    <script>
+        // 【管理員設定】Google 試算表 CSV 同步連結 (貼上一次，全區共用)
+        const googleSheetCsvUrl = ""; 
+
+        // 全區基本參數設定
+        const zoneSettings = [
+            { id: 'fuxing', name: '復興小區', total: 15, url: 'fuxing.html', bgColor: 'bg-amber-500', textColor: 'text-amber-600', range: Array.from({length: 15}, (_, i) => i + 1) },
+            { id: 'zhumiao', name: '竹苗小區', total: 13, url: 'zhumiao.html', bgColor: 'bg-emerald-500', textColor: 'text-emerald-600', range: Array.from({length: 13}, (_, i) => i + 1) },
+            { id: 'zhongmiao', name: '中苗小區', total: 14, url: 'zhongmiao.html', bgColor: 'bg-purple-500', textColor: 'text-purple-600', range: Array.from({length: 14}, (_, i) => i + 1) },
+            { id: 'nantou', name: '南投小區', total: 12, url: 'nantou.html', bgColor: 'bg-rose-500', textColor: 'text-rose-600', range: Array.from({length: 12}, (_, i) => i + 17) } // 南投ID特殊處理 (17~28)
+        ];
+
+        // 54間教會字典對照表 (用於雲端同步比對)
+        const globalChurches = [
+            { name: "八德", zone: "fuxing", id: 1 }, { name: "崎頂", zone: "fuxing", id: 2 }, { name: "大溪", zone: "fuxing", id: 3 }, { name: "復興", zone: "fuxing", id: 4 }, { name: "霞雲", zone: "fuxing", id: 5 }, { name: "義盛", zone: "fuxing", id: 6 }, { name: "卡普", zone: "fuxing", id: 7 }, { name: "大灣", zone: "fuxing", id: 8 }, { name: "奎輝", zone: "fuxing", id: 9 }, { name: "雪霧鬧", zone: "fuxing", id: 10 }, { name: "上巴陵", zone: "fuxing", id: 11 }, { name: "中巴陵", zone: "fuxing", id: 12 }, { name: "三光", zone: "fuxing", id: 13 }, { name: "高義", zone: "fuxing", id: 14 }, { name: "光華", zone: "fuxing", id: 15 },
+            { name: "養老", zone: "zhumiao", id: 1 }, { name: "李埔", zone: "zhumiao", id: 2 }, { name: "那羅", zone: "zhumiao", id: 3 }, { name: "錦屏", zone: "zhumiao", id: 4 }, { name: "尖石", zone: "zhumiao", id: 5 }, { name: "義興", zone: "zhumiao", id: 6 }, { name: "花園", zone: "zhumiao", id: 7 }, { name: "五峰", zone: "zhumiao", id: 8 }, { name: "桃山", zone: "zhumiao", id: 9 }, { name: "清泉", zone: "zhumiao", id: 10 }, { name: "頭份", zone: "zhumiao", id: 11 }, { name: "東江", zone: "zhumiao", id: 12 }, { name: "東河", zone: "zhumiao", id: 13 },
+            { name: "永安", zone: "zhongmiao", id: 1 }, { name: "大安", zone: "zhongmiao", id: 2 }, { name: "士林", zone: "zhongmiao", id: 3 }, { name: "大興", zone: "zhongmiao", id: 4 }, { name: "達觀", zone: "zhongmiao", id: 5 }, { name: "竹林", zone: "zhongmiao", id: 6 }, { name: "雙崎", zone: "zhongmiao", id: 7 }, { name: "自由", zone: "zhongmiao", id: 8 }, { name: "東勢", zone: "zhongmiao", id: 9 }, { name: "南勢", zone: "zhongmiao", id: 10 }, { name: "裡冷", zone: "zhongmiao", id: 11 }, { name: "博愛", zone: "zhongmiao", id: 12 }, { name: "環山", zone: "zhongmiao", id: 13 }, { name: "佳陽", zone: "zhongmiao", id: 14 },
+            { name: "翠巒", zone: "nantou", id: 17 }, { name: "力行", zone: "nantou", id: 18 }, { name: "紅香", zone: "nantou", id: 19 }, { name: "慈峰", zone: "nantou", id: 20 }, { name: "親愛", zone: "nantou", id: 21 }, { name: "春陽", zone: "nantou", id: 22 }, { name: "廬山", zone: "nantou", id: 23 }, { name: "精英", zone: "nantou", id: 24 }, { name: "新生", zone: "nantou", id: 25 }, { name: "仁愛", zone: "nantou", id: 26 }, { name: "武界", zone: "nantou", id: 27 }, { name: "望美", zone: "nantou", id: 28 }
+        ];
+
+        // 渲染儀表板
+        function renderDashboard() {
+            let totalSubmitted = 0;
+            let totalChurches = 54;
+            
+            // 計算各區數據
+            zoneSettings.forEach(zone => {
+                let submitted = 0;
+                zone.range.forEach(churchId => {
+                    if(localStorage.getItem(`tjc_${zone.id}_status_${churchId}`) === 'submitted') {
+                        submitted++;
+                    }
+                });
+                zone.submitted = submitted;
+                zone.percent = Math.round((submitted / zone.total) * 100);
+                totalSubmitted += submitted;
+            });
+
+            // 依完成進度百分比降冪排序 (若同分則看已交件數)
+            zoneSettings.sort((a, b) => {
+                if (b.percent !== a.percent) return b.percent - a.percent;
+                return b.submitted - a.submitted;
+            });
+
+            // 繪製排行榜
+            const board = document.getElementById('leaderboard');
+            board.innerHTML = '';
+            
+            zoneSettings.forEach((zone, index) => {
+                const isFirst = index === 0 && zone.percent > 0; // 只有進度大於0的第一名才有皇冠
+                const rankIcon = isFirst ? '👑' : ['🥈','🥉',''][index-1] || '💪';
+                
+                const html = `
+                    <div class="relative group">
+                        <div class="flex justify-between items-end mb-1.5 px-1">
+                            <span class="font-black text-slate-700 flex items-center gap-2 text-sm">
+                                <span class="text-lg">${rankIcon}</span> 
+                                <a href="${zone.url}" class="hover:underline hover:text-indigo-600 transition-colors">${zone.name}</a>
+                                <span class="text-[10px] text-slate-400 font-bold bg-slate-100 px-2 py-0.5 rounded-full">${zone.submitted} / ${zone.total} 處</span>
+                            </span>
+                            <span class="font-black ${zone.textColor} text-lg">${zone.percent}%</span>
+                        </div>
+                        <div class="w-full bg-slate-100 rounded-full h-4 overflow-hidden border border-slate-200 shadow-inner">
+                            <div class="${zone.bgColor} h-full rounded-full bar-animate relative" style="width: 0%" data-target="${zone.percent}%">
+                                ${zone.percent === 100 ? '<div class="absolute inset-0 bg-white/20 animate-pulse"></div>' : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                board.innerHTML += html;
+            });
+
+            // 觸發進度條動畫
+            setTimeout(() => {
+                document.querySelectorAll('.bar-animate').forEach(bar => {
+                    bar.style.width = bar.getAttribute('data-target');
+                });
+            }, 100);
+
+            // 更新總進度圓環
+            document.getElementById('total-submitted').innerText = totalSubmitted;
+            const overallPercent = Math.round((totalSubmitted / totalChurches) * 100);
+            document.getElementById('total-percent').innerText = `${overallPercent}%`;
+            
+            // 圓環周長為 283，計算 dashoffset (100% = 0, 0% = 283)
+            const circle = document.getElementById('total-progress-circle');
+            const offset = 283 - (283 * overallPercent) / 100;
+            circle.style.strokeDashoffset = offset;
+        }
+
+        // 跨區總表同步功能
+        async function masterSync() {
+            if (!googleSheetCsvUrl) {
+                alert("💡 管理員提示：\n尚未設定 Google 試算表 CSV 同步連結。\n目前儀表板顯示的是您「本機瀏覽器」中，四個小區的紀錄進度！");
+                return;
+            }
+
+            try {
+                const response = await fetch(googleSheetCsvUrl);
+                const csvData = await response.text();
+                
+                globalChurches.forEach(c => {
+                    // 只要 CSV 中包含該教會名稱，即視為已繳交 (武界等特殊名稱在名字裡已處理)
+                    if (csvData.includes(c.name)) {
+                        localStorage.setItem(`tjc_${c.zone}_status_${c.id}`, 'submitted');
+                    }
+                });
+
+                alert("🔄 全區總覽儀表板同步完成！\n已自動更新復興、竹苗、中苗、南投四區的最新戰況。");
+                renderDashboard();
+            } catch (error) {
+                console.error("同步失敗:", error);
+                alert("❌ 同步失敗，請確認您的試算表「發布到網路」設定是否正確，或檢查網路連線。");
+            }
+        }
+
+        // 頁面載入時渲染
+        window.addEventListener('DOMContentLoaded', renderDashboard);
+    </script>
 </body>
 </html>
